@@ -1,11 +1,11 @@
-import { ThreadManager } from './thread/thread-manager';
+import { ThreadManager, ThreadManagerConfig} from './thread/thread-manager';
 
 class BetterWorker {
   private option: any;
   private tm: ThreadManager;
   public doTask(option: any) {
     this.option = option;
-    this.tm = new ThreadManager();
+    this.tm = new ThreadManager(option.threadConfig, option.workerConfig);
   }
 
   public close(): void {
