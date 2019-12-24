@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   <h1>test betterworker</h1> 
+</body>
+</html>
+<script src="./request.js"></script>
+<script src="./BetterWorker.min.js"></script>
+<script type="text/javascript">
+//   const api = 'http://127.0.0.1:8010/test';
+//   request(api);
+  const api = 'http://127.0.0.1:8018/test';
+  const workerPath = 'http://local.h5.com/mygithub/better-webworker/test/request.js';
+  const bw = new BetterWorker([
+    workerPath,
+    workerPath,
+    workerPath,
+    workerPath,
+  ]);
+  bw.doTask(0, 'request', api, function(res) {
+
+  });
+  bw.doTask(1, 'request', api, function(res) {
+
+  });
+  bw.doTask(2, 'request', api, function(res) {
+
+  });
+  bw.doTask(3, 'request', api, function(res) {
+
+  });
+</script>

@@ -3,17 +3,12 @@ import { ThreadManager, ThreadManagerConfig} from './thread/thread-manager';
 class BetterWorker {
   private option: any;
   private tm: ThreadManager;
-  public doTask(option: any) {
-    this.option = option;
-    this.tm = new ThreadManager(option.threadConfig, option.workerConfig);
+  constructor(workerPaths: Array<string>) {
+    
   }
 
-  public close(): void {
-
-  }
-
-  public destory(): void {
-
+  public doTask(index: Number, method: string, param: any, listener: Function) {
+    
   }
 }
 

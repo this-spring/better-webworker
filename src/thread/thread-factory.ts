@@ -8,6 +8,8 @@ export class ThreadFactory implements ThreadFactoryI {
       window.fetch(url).then(response => response.text()).then(res => {
         const worker = new window.Worker(window.URL.createObjectURL(new window.Blob([res])));
         ok(worker);
+      }).then(error => {
+        no(error);
       });
     });
   }
