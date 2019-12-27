@@ -7,8 +7,8 @@ class BetterWorker {
     this.tm = new ThreadManager(workerPaths);
   }
 
-  public doTask(index: Number, method: string, param: any, listener: Function) {
-    
+  public doTask(index: number, method: string, param: any, listener: Function) {
+    this.tm.disPatcherTask(index, method, param, listener);
   }
 }
 
