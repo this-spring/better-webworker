@@ -8,13 +8,12 @@
 </head>
 <body>
    <h1>test betterworker</h1> 
+   <button style="width: 100px; height: 50px;" onclick="startBetterWorker()">start</button>
 </body>
 </html>
 <script src="./request.js"></script>
 <script src="../dist/BetterWorker.min.js"></script>
 <script type="text/javascript">
-//   const api = 'http://127.0.0.1:8010/test';
-//   request(api);
   const api = 'http://127.0.0.1:8010/test';
   const workerPath = 'http://local.h5.com/mygithub/better-webworker/test/request.js';
   const bw = new BetterWorker([
@@ -23,17 +22,20 @@
     workerPath,
     workerPath,
   ]);
-  // console.error(b);
-  bw.doTask(0, 'request', api, function(res) {
-    console.log(res);
-  });
-  // bw.doTask(1, 'request', api, function(res) {
-
-  // });
-  // bw.doTask(2, 'request', api, function(res) {
-
-  // });
-  // bw.doTask(3, 'request', api, function(res) {
-
-  // });
+  function startBetterWorker() {
+    setInterval(() => {
+      bw.doTask(0, 'request', api, function(res) {
+        console.log(res);
+      });
+      bw.doTask(1, 'addSum', '', function(res) {
+        console.log(res);
+      });
+      bw.doTask(2, 'request', api, function(res) {
+        console.log(res);
+      });
+      bw.doTask(3, 'addSum', '', function(res) {
+        console.log(res);
+      });
+    }, 100);
+  }
 </script>

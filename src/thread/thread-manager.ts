@@ -88,7 +88,6 @@ export class ThreadManager {
     //   param,
     // };
     const cb = this.taskCb.get(`${index}${method}${param}`);
-    console.log(`${index}${method}${param}`, e, this.taskCb, cb);
     cb(res);
   }
 }

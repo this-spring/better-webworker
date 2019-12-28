@@ -1,3 +1,5 @@
+// your worker code here
+// make sure eacher method reture promise
 function request(api) {
   return new Promise((ok, no) => {
     fetch(api).then(res => {
@@ -10,19 +12,13 @@ function request(api) {
   });
 }
 
-onmessage = function(e) {
-  const index = e.data.index;
-  const method = e.data.method;
-  const param = e.data.param;
-  console.log(method, param);
-  eval(method)(param).then((res) => {
-    postMessage({
-      index,
-      method,
-      param,
-      res
-    })
-  }).catch((error) => {
-    postMessage(error);
-  })
+function addSum() {
+  return new Promise((ok,no) => {
+    let sum = 0;
+    // One hundred thousand calc
+    for (let i = 0, len = 100000; i < len; i += 1) {
+      sum += i;
+    }
+    ok(sum);
+  });
 }
