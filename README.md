@@ -10,6 +10,9 @@ node src/server/server.js
 ## Start lib
 npm run dev  
 
+## Open  
+http://127.0.0.1:8083/index.html
+
 # Use  
 init: 
 ```
