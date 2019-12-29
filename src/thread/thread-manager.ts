@@ -63,7 +63,7 @@ export class ThreadManager {
     const self = this;
     let count = 0;
     for (let i = 0, len = this.wps.length; i < len; i += 1) {
-      ThreadFactory.createzThread(this.wps[i]).then((res: Worker) => {
+      ThreadFactory.createThread(this.wps[i]).then((res: Worker) => {
         self.thread.set(i, res);
         res.onmessage = self.doTaskListener.bind(this);
         count += 1;

@@ -40,27 +40,23 @@ param: input value to this method
 
 ```
   const api = 'http://127.0.0.1:8010/test';
-  const workerPath = 'http://local.h5.com/mygithub/better-webworker/test/request.js';
+  const workerPath = 'http://127.0.0.1:8083/request.js';
   const bw = new BetterWorker([
     workerPath, // run in worker code
     workerPath,
     workerPath,
     workerPath,
   ]);
-  function startBetterWorker() {
-    setInterval(() => {
-      bw.doTask(0, 'request', api, function(res) {
-        console.log(res);
-      });
-      bw.doTask(1, 'addSum', '', function(res) {
-        console.log(res);
-      });
-      bw.doTask(2, 'request', api, function(res) {
-        console.log(res);
-      });
-      bw.doTask(3, 'addSum', '', function(res) {
-        console.log(res);
-      });
-    }, 100);
-  }
+  bw.doTask(0, 'request', api, function(res) {
+    console.log(res);
+  });
+  bw.doTask(1, 'addSum', '', function(res) {
+    console.log(res);
+  });
+  bw.doTask(2, 'request', api, function(res) {
+    console.log(res);
+  });
+  bw.doTask(3, 'addSum', '', function(res) {
+    console.log(res);
+  });
 ```

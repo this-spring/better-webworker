@@ -1,7 +1,3 @@
-interface ThreadFactoryI {
-  // createThread(): 
-}
-
 const workerTemplate = `onmessage = function(e) {
   const index = e.data.index;
   const method = e.data.method;
@@ -18,8 +14,8 @@ const workerTemplate = `onmessage = function(e) {
   })
 }`
 
-export class ThreadFactory implements ThreadFactoryI {
-  static createzThread(url: string): Promise<Worker> {
+export class ThreadFactory {
+  static createThread(url: string): Promise<Worker> {
     return new Promise<Worker>((ok, no) => {
       window.fetch(url).then(response => response.text()).then(res => {
         res += workerTemplate;
