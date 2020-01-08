@@ -1,18 +1,20 @@
-const workerTemplate = `onmessage = function(e) {
-  const index = e.data.index;
-  const method = e.data.method;
-  const param = e.data.param;
-  eval(method)(param).then((res) => {
-    postMessage({
-      index,
-      method,
-      param,
-      res
-    })
-  }).catch((error) => {
-    postMessage(error);
-  })
-}`
+// const workerTemplate = `onmessage = function(e) {
+//   const index = e.data.index;
+//   const method = e.data.method;
+//   const param = e.data.param;
+//   eval(method)(param).then((res) => {
+//     postMessage({
+//       index,
+//       method,
+//       param,
+//       res
+//     })
+//   }).catch((error) => {
+//     postMessage(error);
+//   })
+// }`
+
+const workerTemplate = '';
 
 export class ThreadFactory {
   static createThread(url: string): Promise<Worker> {

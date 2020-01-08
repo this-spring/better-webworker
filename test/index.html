@@ -25,7 +25,20 @@
   function startBetterWorker() {
     setInterval(() => {
       bw.doTask(0, 'request', api, function(res) {
+        /**
+         * res:
+         * {
+         *  data: res,
+         *  costTime: 100, // ms
+         *  index: 0,
+         *  method: 'request',
+         *  api: 'api',
+         *  avgPP: 10, // ms ping pong avg time
+         * }
+         */
         console.log(res);
+      }, function(error) {
+        // webworker error
       });
       bw.doTask(1, 'addSum', '', function(res) {
         console.log(res);

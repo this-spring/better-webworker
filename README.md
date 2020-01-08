@@ -14,6 +14,11 @@ npm run dev
 http://127.0.0.1:8083/index.html
 
 # Use  
+max thread:  
+```
+BetterWorker.MaxThread
+```
+if not support navigator.hardwareConcurrency, MaxThread = (4 + 2)   
 init: 
 ```
 const bw = new BetterWorker([
