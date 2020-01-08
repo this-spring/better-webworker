@@ -29,7 +29,7 @@ export class ThreadManager {
     this.init();
   }
 
-  public disPatcherTask(index: number, method: string, param: any, listener: Function, errorListener: Function): void {
+  public disPatcherTask(index: number, method: string, param: any, listener: Function): void {
     // this.taskQueue.push({
     //   index,
     //   method,
@@ -38,7 +38,7 @@ export class ThreadManager {
     // });
     // if (this.allWorkerReady) this.doTask();
     const workerHandle: WorkerHandle = this.thread.get(index);
-    workerHandle.doTask(index, method, param, listener, errorListener);
+    workerHandle.doTask(index, method, param, listener);
   }
 
   // private doTask(): void {
@@ -58,11 +58,11 @@ export class ThreadManager {
 
   private init(): void {
     const self = this;
-    let count = 0;
     for (let i = 0, len = this.wps.length; i < len; i += 1) {
+      const workerHandle = new WorkerHandle();
+      self.thread.set(i, workerHandle);
       ThreadFactory.createThread(this.wps[i]).then((res: Worker) => {
-        const workerHandle = new WorkerHandle(res);
-        self.thread.set(i, workerHandle);
+        self.thread.get(i).initWorker(res);
       }).catch((res: any) => {
         throw new Error(`init webworker error: ${res}`);
       });

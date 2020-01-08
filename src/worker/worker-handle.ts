@@ -1,12 +1,5 @@
 import { MakePingCmd, MakeTaskCmd, MakeCloseCmd, CmdType } from './command';
 
-type SignFun = {
-  index: number,
-  method: string,
-  param: any,
-  key?: number,
-}
-
 class WorkerHandle {
   private worker: Worker = null;
   private key: number = 0;
@@ -20,7 +13,7 @@ class WorkerHandle {
     // https://developer.mozilla.org/zh-CN/docs/Web/API/AbstractWorker/onerror
     this.worker.onerror = this.doError.bind(this);
     // https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/onmessageerror
-    this.worker.onmessageerror = this.doMessageError.bind(this);
+    // this.worker.onmessageerror = this.doMessageError.bind(this);
     this.ready = true;
     this.startTask();
   }
@@ -29,13 +22,12 @@ class WorkerHandle {
     this.worker.postMessage(MakeCloseCmd());
   }
 
-  public doTask(index: number, method: string, param: any, listener: Function, errorListener: Function): void {
+  public doTask(index: number, method: string, param: any, listener: Function): void {
     this.taskQueue.push({
       index,
       method,
       param,
       listener,
-      errorListener,
     });
     this.startTask();
   }
@@ -44,10 +36,11 @@ class WorkerHandle {
     const cmd = e.data.cmd;
     switch(cmd) {
       case CmdType.pong:
-        this.calPPavg();
+        // this.calPPavg();
         break;
       case CmdType.task:
-        this.noticeListener(e.data.paylod);
+        this.noticeListener(e.data.payload);
+        break;
     } 
   }
 
@@ -57,13 +50,14 @@ class WorkerHandle {
     const method = paylod.method;
     const key = paylod.key;
     const res = paylod.res;
+    const costTime = Date.now() - paylod.startTime;
     const cb = this.taskCb.get(key);
     cb[0]({
       index,
       param,
       method,
       data: res,
-
+      costTime,
     })
   }
   
@@ -78,11 +72,12 @@ class WorkerHandle {
         const { index, method, param, listener } = currentTask;
         // make sign to each task
         this.key += 1;
-        const postDataSign: SignFun = {
+        const postDataSign = {
           index,
           method,
           param,
           key: this.key,
+          startTime: Date.now(),
         };
         const cb = [listener, currentTask.errorListener];
         const command = MakeTaskCmd(postDataSign);
@@ -92,9 +87,9 @@ class WorkerHandle {
     }
   }
 
-  private doMessageError(): void {
+  // private doMessageError(): void {
 
-  }
+  // }
 
   private ping(): void {
     this.worker.postMessage(MakePingCmd);

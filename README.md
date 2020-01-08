@@ -32,6 +32,16 @@ your js file of constructor will work in worker
 use bw:  
 ```
 bw.doTask(index, method, param, (res) => {
+    /**
+    * res:
+    * {
+    *  data: res,
+    *  costTime: 100, // ms
+    *  index: 0,
+    *  method: 'request',
+    *  api: 'api',
+    * }
+    */
     console.log(res);
 });
 ......

@@ -13,31 +13,31 @@ export const CmdType = {
   task: 'task',
 }
 
-export const MakePingCmd = () => {
-  const cmd = `{
-    cmd: ${CmdType.ping},
-  }`;
+export function MakePingCmd() {
+  const cmd = {
+    cmd: CmdType.ping,
+  };
   return cmd;
 };
 
-export const MakePongCmd = () => {
-  const cmd = `{
-    cmd: ${CmdType.pong},
-  }`;
+export function MakePongCmd() {
+  const cmd = {
+    cmd: CmdType.pong,
+  };
   return cmd; 
 };
 
-export const MakeCloseCmd = () => {
-  const cmd = `{
-    cmd: ${CmdType.close},
-  }`;
+export function MakeCloseCmd() {
+  const cmd = {
+    cmd: CmdType.close,
+  };
   return cmd;
 }
 
-export const MakeTaskCmd = (payload: any) => {
-  const cmd = `{
-    cmd: ${CmdType.task},
-    payload: ${payload},
-  }`;
+export function MakeTaskCmd(payload) {
+  const cmd = {
+    cmd: CmdType.task,
+    payload: payload,
+  };
   return cmd;
 }

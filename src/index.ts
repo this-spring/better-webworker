@@ -14,6 +14,11 @@ class BetterWorker {
   public doTask(index: number, method: string, param: any, listener: Function) {
     this.tm.disPatcherTask(index, method, param, listener);
   }
+
+  // TODO: close
+  public close(): void {
+    // this.tm.close();
+  }
 }
 
 export default BetterWorker;
