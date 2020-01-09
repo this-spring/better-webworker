@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>better-worker</title>
+    <style>
+      .btn {
+        width: 60px;
+        height: 30px;
+      }
+    </style>
 </head>
 <body>
    <h1>test betterworker</h1> 
-   <button style="width: 100px; height: 50px;" onclick="startBetterWorker()">start</button>
+   <button class="btn" onclick="startBetterWorker()">start</button>
+   <button class="btn" onclick="closeBetterWorker()">close</button>
 </body>
 </html>
 <script src="./request.js"></script>
@@ -22,6 +29,11 @@
     workerPath,
     workerPath,
   ]);
+
+  function closeBetterWorker() {
+    bw.close();
+  }
+
   function startBetterWorker() {
     setInterval(() => {
       bw.doTask(0, 'request', api, function(res) {

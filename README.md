@@ -49,7 +49,12 @@ bw.doTask(index, method, param, (res) => {
 index: use which worker  
 method: which method in this worker  
 param: input value to this method  
-(res) => {}: worker return result
+(res) => {}: worker return result  
+
+close bw:  
+```
+bw.close();
+```
 
 # Example  
 

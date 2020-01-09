@@ -20,6 +20,10 @@ class WorkerHandle {
 
   public close(): void {
     this.worker.postMessage(MakeCloseCmd());
+    this.worker.terminate();
+    this.worker = null;
+    this.taskQueue = null;
+    this.taskCb = null;
   }
 
   public doTask(index: number, method: string, param: any, listener: Function): void {

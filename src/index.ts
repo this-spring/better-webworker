@@ -1,7 +1,9 @@
 import { ThreadManager, ThreadManagerConfig} from './thread/thread-manager';
 
+const v = '1.1.0';
 class BetterWorker {
   static MaxThread: number = (navigator.hardwareConcurrency || 4) + 2;
+  static VERSION: string = v;
   private option: any;
   private tm: ThreadManager;
   constructor(workerPaths: Array<string>) {
@@ -12,12 +14,15 @@ class BetterWorker {
   }
 
   public doTask(index: number, method: string, param: any, listener: Function) {
+    if (!this.tm) {
+      throw new Error('better worker has destory');
+    };
     this.tm.disPatcherTask(index, method, param, listener);
   }
 
-  // TODO: close
   public close(): void {
-    // this.tm.close();
+    this.tm.close();
+    this.tm = null;
   }
 }
 

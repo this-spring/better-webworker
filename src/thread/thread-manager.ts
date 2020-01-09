@@ -6,23 +6,9 @@ export type ThreadManagerConfig = {
   maxWorkTime: number;
 };
 
-// const defaultConfig:ThreadManagerConfig = {
-//   inspectIntervalTime: 10 * 1000,
-//   maxWorkTime: 30 * 1000,
-// };
-// type WorkerObj = {
-//   worker: Worker;
-//   // state:
-// }
-
 export class ThreadManager {
-  private maxThreadNumber: number;
-  private inspectIntervalTime: number;
   private thread: Map<number, WorkerHandle> = new Map();
-  private taskCb: Map<string, Function> = new Map();
   private wps: Array<string>;
-  private taskQueue: Array<any> = [];
-  private allWorkerReady: boolean = false;
 
   constructor(wps: Array<string>) {
     this.wps = wps;
@@ -30,31 +16,17 @@ export class ThreadManager {
   }
 
   public disPatcherTask(index: number, method: string, param: any, listener: Function): void {
-    // this.taskQueue.push({
-    //   index,
-    //   method,
-    //   param,
-    //   listener,
-    // });
-    // if (this.allWorkerReady) this.doTask();
     const workerHandle: WorkerHandle = this.thread.get(index);
     workerHandle.doTask(index, method, param, listener);
   }
 
-  // private doTask(): void {
-  //   for (let i = 0, len = this.taskQueue.length; i < len; i += 1) {
-  //     const currentTask = this.taskQueue.shift();
-  //     const { index, method, param, listener } = currentTask;
-  //     const taskWorker = this.thread.get(index);
-  //     const postDataSign: SignFun = {
-  //       index,
-  //       method,
-  //       param,
-  //     };
-  //     this.taskCb.set(`${index}${method}${param}`, listener);
-  //     taskWorker.postMessage(postDataSign);
-  //   }
-  // }
+  public close(): void {
+    this.thread.forEach((value, key, map) => {
+      value.close();
+    });
+    this.thread = null;
+    this.wps = null;
+  }
 
   private init(): void {
     const self = this;
@@ -67,19 +39,5 @@ export class ThreadManager {
         throw new Error(`init webworker error: ${res}`);
       });
     }
-  }
-
-  private doTaskListener(e): void {
-    const index = e.data.index;
-    const param = e.data.param;
-    const method = e.data.method;
-    const res = e.data.res;
-    // const signKey: SignFun = {
-    //   index,
-    //   method,
-    //   param,
-    // };
-    const cb = this.taskCb.get(`${index}${method}${param}`);
-    cb(res);
   }
 }
